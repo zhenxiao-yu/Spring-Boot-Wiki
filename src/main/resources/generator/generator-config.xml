@@ -6,30 +6,31 @@
 <generatorConfiguration>
     <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
 
-        <!-- 自动检查关键字，为关键字增加反引号 -->
+        <!-- automatically detect keywords and add `` -->
         <property name="autoDelimitKeywords" value="true"/>
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
-        <!--覆盖生成XML文件-->
+        <!--overwrite generate xml file-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
-        <!-- 生成的实体类添加toString()方法 -->
+        <!-- 生成的实体类添加toString() method-->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
 
-        <!-- 不生成注释 -->
+        <!-- don't generate comments -->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
 
+        <!-- driver class config -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://rm-uf6470s9615e13hc4no.mysql.rds.aliyuncs.com:3306/wikidev?serverTimezone=Asia/Shanghai"
-                        userId="wikidev"
-                        password="wikidevABC123">
+                        connectionURL="localhost"
+                        userId="wiki"
+                        password="615615">
         </jdbcConnection>
 
         <!-- domain类的位置 -->
         <javaModelGenerator targetProject="src\main\java"
-                            targetPackage="com.jiawa.wiki.domain"/>
+                            targetPackage="com.zhenxiao.wiki.domain"/>
 
         <!-- mapper xml的位置 -->
         <sqlMapGenerator targetProject="src\main\resources"
@@ -37,7 +38,7 @@
 
         <!-- mapper类的位置 -->
         <javaClientGenerator targetProject="src\main\java"
-                             targetPackage="com.jiawa.wiki.mapper"
+                             targetPackage="com.zhenxiao.wiki.mapper"
                              type="XMLMAPPER"/>
 
         <!--<table tableName="demo" domainObjectName="Demo"/>-->
