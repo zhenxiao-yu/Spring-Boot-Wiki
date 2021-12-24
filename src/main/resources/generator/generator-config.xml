@@ -30,7 +30,7 @@
 
         <!-- domain类的位置 -->
         <javaModelGenerator targetProject="src\main\java"
-                            targetPackage="com.zhenxiao.wiki.domain"/>
+                            targetPackage="com.zhenxiao.wiki.entity"/>
 
         <!-- mapper xml的位置 -->
         <sqlMapGenerator targetProject="src\main\resources"

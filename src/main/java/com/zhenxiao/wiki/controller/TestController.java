@@ -1,6 +1,6 @@
 package com.zhenxiao.wiki.controller;
 
-import com.zhenxiao.wiki.domain.Test;
+import com.zhenxiao.wiki.entity.Test;
 import com.zhenxiao.wiki.service.TestService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;

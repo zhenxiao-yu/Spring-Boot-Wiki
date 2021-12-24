@@ -1,4 +1,4 @@
-package com.zhenxiao.wiki.domain;
+package com.zhenxiao.wiki.entity;
 
 public class Test {
 

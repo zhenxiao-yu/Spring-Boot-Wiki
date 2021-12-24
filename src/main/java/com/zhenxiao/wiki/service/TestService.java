@@ -1,6 +1,6 @@
 package com.zhenxiao.wiki.service;
 
-import com.zhenxiao.wiki.domain.Test;
+import com.zhenxiao.wiki.entity.Test;
 import com.zhenxiao.wiki.mapper.TestMapper;
 import org.springframework.stereotype.Service;
 

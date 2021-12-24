@@ -1,6 +1,6 @@
 package com.zhenxiao.wiki.mapper;
 
-import com.zhenxiao.wiki.domain.Test;
+import com.zhenxiao.wiki.entity.Test;
 
 import java.util.List;
 
