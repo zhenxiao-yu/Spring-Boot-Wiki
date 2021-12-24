@@ -13,7 +13,7 @@
 
         <!--overwrite generate xml file-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
-        <!-- 生成的实体类添加toString() method-->
+        <!-- generate toString() method for entity types-->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
 
         <!-- don't generate comments -->
@@ -28,20 +28,21 @@
                         password="615615">
         </jdbcConnection>
 
-        <!-- domain类的位置 -->
+        <!-- domain type location -->
         <javaModelGenerator targetProject="src\main\java"
                             targetPackage="com.zhenxiao.wiki.entity"/>
 
-        <!-- mapper xml的位置 -->
+        <!-- mapper xml location -->
         <sqlMapGenerator targetProject="src\main\resources"
                          targetPackage="mapper"/>
 
-        <!-- mapper类的位置 -->
+        <!-- mapper type location -->
         <javaClientGenerator targetProject="src\main\java"
                              targetPackage="com.zhenxiao.wiki.mapper"
                              type="XMLMAPPER"/>
 
-        <!--<table tableName="demo" domainObjectName="Demo"/>-->
+        <!-- generated table objects -->
+        <table tableName="demo" domainObjectName="Demo"/>
         <!--<table tableName="ebook"/>-->
         <!--<table tableName="category"/>-->
         <!--<table tableName="doc"/>-->
