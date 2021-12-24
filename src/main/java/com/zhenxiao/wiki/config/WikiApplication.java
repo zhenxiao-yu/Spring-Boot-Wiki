@@ -1,13 +1,14 @@
-package com.zhenxiao.wiki;
+package com.zhenxiao.wiki.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
-
-
+//scan every file under 'com.zhenxiao'
+@ComponentScan("com.zhenxiao")
 @SpringBootApplication
 public class WikiApplication {
     private static final Logger LOG = LoggerFactory.getLogger(WikiApplication.class);
