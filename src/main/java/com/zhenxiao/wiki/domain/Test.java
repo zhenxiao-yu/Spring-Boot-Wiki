@@ -1,14 +1,19 @@
 package com.zhenxiao.wiki.domain;
 
 public class Test {
+
     private Integer id;
 
     private String name;
 
-    private String Password;
+    private String password;
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -20,14 +25,10 @@ public class Test {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.password = password;
     }
 }
