@@ -3,7 +3,7 @@ GET http://localhost:8080/hello
 
 > {%
 // client.test("test-hello", function() {
-//   client.log("测试/hello接口");
+//   client.log("test /hello socket");
 //   client.log(response.body);
 //   client.log(JSON.stringify(response.body)); // can use JSON
 //   client.assert(response.status === 200, "response code is not 200");
