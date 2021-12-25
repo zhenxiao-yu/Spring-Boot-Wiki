@@ -1,7 +1,8 @@
 package com.zhenxiao.wiki.controller;
 
 import com.zhenxiao.wiki.entity.Ebook;
-import com.zhenxiao.wiki.response.CommonResp;
+import com.zhenxiao.wiki.response.CommonRes;
+import com.zhenxiao.wiki.response.EbookRes;
 import com.zhenxiao.wiki.service.EbookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,11 @@ public class EbookController {
     @Resource
     private EbookService ebookService;
 
+//
     @GetMapping("/list")
-    public CommonResp list() {
-        CommonResp<List<Ebook>> resp = new CommonResp<>();
-        List<Ebook> list = ebookService.list();
+    public CommonRes list(Ebook req) {
+        CommonRes<List<EbookRes>> resp = new CommonRes<>();
+        List<EbookRes> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }

@@ -1,22 +1,15 @@
 package com.zhenxiao.wiki.response;
 
-public class CommonResp<T> {
-
-    /**
-     * operation status flag
-     */
+//common response class
+public class CommonRes<T> {
+    //hold task status as boolean value
     private boolean success = true;
-
-    /**
-     * return message
-     */
+    // holds response message as string
     private String message;
-
-    /**
-     * generic data
-     */
+    // holds content as generic data type
     private T content;
 
+    // getters and setters
     public boolean getSuccess() {
         return success;
     }
@@ -41,6 +34,7 @@ public class CommonResp<T> {
         this.content = content;
     }
 
+    // toString Method for formatting response
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("ResponseDto{");
