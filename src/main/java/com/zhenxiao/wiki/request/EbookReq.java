@@ -5,8 +5,6 @@ public class EbookReq {
 
     private String name;
 
-
-
     public Long getId() {
         return id;
     }
