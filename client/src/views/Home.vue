@@ -64,23 +64,22 @@ export default defineComponent({
     console.log("setup");
     //use ref() to make ebooks a dynamic data
     const ebooks = ref();
-
-    const ebooks1 = reactive({books: []});
+    //using reactive
+    // const ebooks1 = reactive({books: []});
 
     onMounted(() => {
       //get ebooks data
       axios.get("http://localhost:8080/ebook/list?name=Java").then((res) => {
         const data = res.data;
         ebooks.value = data.content;
-        ebooks1.books = data.content;
-        console.log(res);
+        // ebooks1.books = data.content;
       });
     });
 
     //return dynamic ebooks data
     return {
       ebooks,
-      ebooks2: toRef(ebooks1, "books")
+      // ebooks2: toRef(ebooks1, "books")
     }
   }
 });
