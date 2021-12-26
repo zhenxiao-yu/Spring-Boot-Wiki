@@ -6,6 +6,7 @@ import com.zhenxiao.wiki.mapper.EbookMapper;
 import com.zhenxiao.wiki.response.EbookRes;
 import com.zhenxiao.wiki.util.CopyUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +21,10 @@ public class EbookService {
     public List<EbookRes> list(Ebook req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        criteria.andNameLike("%" + req.getName() + "%");
+        //dynamic sql syntax
+        if (!ObjectUtils.isEmpty(req.getName())) {
+            criteria.andNameLike("%" + req.getName() + "%");
+        }
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
 //        //declare new arraylist variable to hold list of ebook responses
