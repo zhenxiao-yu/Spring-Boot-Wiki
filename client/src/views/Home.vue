@@ -47,8 +47,36 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      <pre>{{ebooks}}</pre>
-      <pre>{{ebooks2}}</pre>
+      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+        <template #renderItem="{ item }">
+          <a-list-item key="item.name">
+            <template #actions>
+              <span>
+                <component v-bind:is="'FileOutlined'" style="margin-right: 8px" />
+                {{ item.docCount }}
+              </span>
+              <span>
+                <component v-bind:is="'UserOutlined'" style="margin-right: 8px" />
+
+                {{ item.viewCount }}
+              </span>
+              <span>
+                <component v-bind:is="'LikeOutlined'" style="margin-right: 8px" />
+                {{ item.voteCount }}
+              </span>
+            </template>
+            <a-list-item-meta :description="item.description">
+              <template #title>
+                <router-link :to="'/doc?ebookId=' + item.id">
+                  {{ item.name }}
+                </router-link>
+              </template>
+              <template #avatar><a-avatar :src="item.cover"/></template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
+
 
     </a-layout-content>
   </a-layout>
@@ -57,11 +85,11 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref, reactive, toRef} from 'vue';
 import axios from 'axios';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'Home',
   setup() {
-    console.log("setup");
     //use ref() to make ebooks a dynamic data
     const ebooks = ref();
     //using reactive
@@ -69,7 +97,7 @@ export default defineComponent({
 
     onMounted(() => {
       //get ebooks data
-      axios.get("http://localhost:8080/ebook/list?name=Java").then((res) => {
+      axios.get("http://localhost:8080/ebook/list?name=").then((res) => {
         const data = res.data;
         ebooks.value = data.content;
         // ebooks1.books = data.content;
@@ -85,3 +113,12 @@ export default defineComponent({
 });
 </script>
 
+<style scoped>
+.ant-avatar {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 8%;
+  margin: 5px 0;
+}
+</style>
