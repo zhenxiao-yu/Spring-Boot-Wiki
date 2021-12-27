@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.zhenxiao.wiki.entity.Ebook;
 import com.zhenxiao.wiki.entity.EbookExample;
 import com.zhenxiao.wiki.mapper.EbookMapper;
+import com.zhenxiao.wiki.request.EbookReq;
 import com.zhenxiao.wiki.response.EbookRes;
+import com.zhenxiao.wiki.response.PageRes;
 import com.zhenxiao.wiki.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +25,7 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    //
-    public List<EbookRes> list(Ebook req) {
+    public PageRes<EbookRes> list(EbookReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         //dynamic sql syntax
@@ -32,7 +33,7 @@ public class EbookService {
             criteria.andNameLike("%" + req.getName() + "%");
         }
         //using page helper plugin
-        PageHelper.startPage(1,3);
+        PageHelper.startPage(req.getPage(),req.getSize());
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
         // get page info of ebooklist
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
@@ -48,7 +49,12 @@ public class EbookService {
 //            EbookRes ebookRes = CopyUtil.copy(ebook, EbookRes.class);
 //            responseList.add(ebookRes);
 //        }
+
         List<EbookRes> list = CopyUtil.copyList(ebookList, EbookRes.class);
-        return list;
+
+        PageRes<EbookRes> pageRes = new PageRes();
+        pageRes.setTotal(pageInfo.getTotal());
+        pageRes.setList(list);
+        return pageRes;
     }
 }
