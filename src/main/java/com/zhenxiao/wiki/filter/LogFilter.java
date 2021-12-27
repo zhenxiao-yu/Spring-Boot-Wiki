@@ -27,6 +27,6 @@ public class LogFilter implements Filter {
 
         long startTime = System.currentTimeMillis();
         filterChain.doFilter(servletRequest, servletResponse);
-        LOG.info("---------------- LogFilter END timelapse：{} ms ----------------", System.currentTimeMillis() - startTime);
+        LOG.info("---------------- LogFilter END | time elapsed：{} ms ----------------", System.currentTimeMillis() - startTime);
     }
 }
