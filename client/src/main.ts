@@ -2,9 +2,32 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios';
 import Antd from 'ant-design-vue';
 import * as Icons from '@ant-design/icons-vue';
 import 'ant-design-vue/dist/antd.css';
+
+//set up base url for axios requests
+axios.defaults.baseURL = process.env.VUE_APP_SERVER;
+
+//use axios interceptor to print log
+axios.interceptors.request.use(function (config) {
+    //print request
+    console.log('request：', config);
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+axios.interceptors.response.use(function (response) {
+    //print response
+    console.log('response：', response);
+    return response;
+}, error => {
+    //printing error
+    console.log('error：', error);
+    return Promise.reject(error);
+});
+
 
 //create application component
 const app = createApp(App);
