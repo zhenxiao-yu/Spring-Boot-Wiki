@@ -52,16 +52,16 @@
           <a-list-item key="item.name">
             <template #actions>
               <span>
-                <component v-bind:is="'FileOutlined'" style="margin-right: 8px" />
+                <component v-bind:is="'FileOutlined'" style="margin-right: 8px"/>
                 {{ item.docCount }}
               </span>
               <span>
-                <component v-bind:is="'UserOutlined'" style="margin-right: 8px" />
+                <component v-bind:is="'UserOutlined'" style="margin-right: 8px"/>
 
                 {{ item.viewCount }}
               </span>
               <span>
-                <component v-bind:is="'LikeOutlined'" style="margin-right: 8px" />
+                <component v-bind:is="'LikeOutlined'" style="margin-right: 8px"/>
                 {{ item.voteCount }}
               </span>
             </template>
@@ -71,7 +71,9 @@
                   {{ item.name }}
                 </router-link>
               </template>
-              <template #avatar><a-avatar :src="item.cover"/></template>
+              <template #avatar>
+                <a-avatar :src="item.cover"/>
+              </template>
             </a-list-item-meta>
           </a-list-item>
         </template>
@@ -85,7 +87,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref, reactive, toRef} from 'vue';
 import axios from 'axios';
-import { message } from 'ant-design-vue';
+import {message} from 'ant-design-vue';
 
 export default defineComponent({
   name: 'Home',
@@ -97,9 +99,14 @@ export default defineComponent({
 
     onMounted(() => {
       //get ebooks data
-      axios.get("/ebook/list").then((res) => {
+      axios.get("/ebook/list", {
+        params: {
+          page: 1,
+          size: 1000
+        }
+      }).then((res) => {
         const data = res.data;
-        ebooks.value = data.content;
+        ebooks.value = data.content.list;
         // ebooks1.books = data.content;
       });
     });
