@@ -34,8 +34,8 @@ public class LogAspect {
     public void controllerPointcut() {
     }
 
-//    @Resource
-//    private SnowFlake snowFlake;
+    // @Resource
+    // private SnowFlake snowFlake;
 
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
@@ -52,14 +52,14 @@ public class LogAspect {
         // print request information
         LOG.info("------------- START -------------");
         LOG.info("request url: {} {}", request.getRequestURL().toString(), request.getMethod());
-        LOG.info("类名方法: {}.{}", signature.getDeclaringTypeName(), name);
-        LOG.info("远程地址: {}", request.getRemoteAddr());
+        LOG.info(": {}.{}", signature.getDeclaringTypeName(), name);
+        LOG.info("remote url: {}", request.getRemoteAddr());
 
         // RequestContext.setRemoteAddr(getRemoteIp(request));
 
         // print request arguments
         Object[] args = joinPoint.getArgs();
-        // LOG.info("请求参数: {}", JSONObject.toJSONString(args));
+        // LOG.info("request argument: {}", JSONObject.toJSONString(args));
         Object[] arguments = new Object[args.length];
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof ServletRequest
