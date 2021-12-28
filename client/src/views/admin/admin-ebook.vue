@@ -3,24 +3,24 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-<!--      <p>-->
-<!--        <a-form layout="inline" :model="param">-->
-<!--          <a-form-item>-->
-<!--            <a-input v-model:value="param.name" placeholder="名称">-->
-<!--            </a-input>-->
-<!--          </a-form-item>-->
-<!--          <a-form-item>-->
-<!--            <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">-->
-<!--              查询-->
-<!--            </a-button>-->
-<!--          </a-form-item>-->
-<!--          <a-form-item>-->
-<!--            <a-button type="primary" @click="add()">-->
-<!--              新增-->
-<!--            </a-button>-->
-<!--          </a-form-item>-->
-<!--        </a-form>-->
-<!--      </p>-->
+      <p>
+        <a-form layout="inline" :model="param">
+          <a-form-item>
+            <a-input v-model:value="param.name" placeholder="名称">
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
+              查询
+            </a-button>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" @click="add()">
+              新增
+            </a-button>
+          </a-form-item>
+        </a-form>
+      </p>
       <a-table
           :columns="columns"
           :row-key="record => record.id"
@@ -30,7 +30,7 @@
           @change="handleTableChange"
       >
         <template #cover="{ text: cover }">
-          <img v-if="cover" :src="cover" alt="avatar" />
+          <img v-if="cover" :src="cover" alt="avatar"/>
         </template>
         <template v-slot:category="{ text, record }">
           <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
@@ -68,30 +68,30 @@
       @ok="handleModalOk"
   >
     <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <a-form-item label="封面">
-        <a-input v-model:value="ebook.cover" />
+      <a-form-item label="Cover">
+        <a-input v-model:value="ebook.cover"/>
       </a-form-item>
-      <a-form-item label="名称">
-        <a-input v-model:value="ebook.name" />
+      <a-form-item label="Name">
+        <a-input v-model:value="ebook.name"/>
       </a-form-item>
-      <a-form-item label="分类">
+      <a-form-item label="Category">
         <a-cascader
             v-model:value="categoryIds"
             :field-names="{ label: 'name', value: 'id', children: 'children' }"
             :options="level1"
         />
       </a-form-item>
-      <a-form-item label="描述">
-        <a-input v-model:value="ebook.description" type="textarea" />
+      <a-form-item label="Description">
+        <a-input v-model:value="ebook.description" type="textarea"/>
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
-import { message } from 'ant-design-vue';
+import {message} from 'ant-design-vue';
 // import {Tool} from "@/util/tool";
 
 export default defineComponent({
@@ -109,41 +109,40 @@ export default defineComponent({
 
     const columns = [
       {
-        title: '封面',
+        title: 'Cover',
         dataIndex: 'cover',
-        slots: { customRender: 'cover' }
+        slots: {customRender: 'cover'}
       },
       {
-        title: '名称',
+        title: 'Name',
         dataIndex: 'name'
       },
       {
-        title: '分类',
-        slots: { customRender: 'category' }
+        title: 'Category',
+        slots: {customRender: 'category'}
       },
       {
-        title: '文档数',
+        title: 'DocCount',
         dataIndex: 'docCount'
       },
       {
-        title: '阅读数',
+        title: 'ViewCount',
         dataIndex: 'viewCount'
       },
       {
-        title: '点赞数',
+        title: 'VoteCount',
         dataIndex: 'voteCount'
       },
       {
         title: 'Action',
         key: 'action',
-        slots: { customRender: 'action' }
+        slots: {customRender: 'action'}
       }
     ];
 
-    /**
-     * 数据查询
-     **/
+    //handle query about ebook list
     const handleQuery = (params: any) => {
+      //set leading to true initially
       loading.value = true;
       // 如果不清空现有数据，则编辑保存重新加载数据后，再点编辑，则列表显示的还是编辑前的数据
       ebooks.value = [];
@@ -159,7 +158,7 @@ export default defineComponent({
         if (data.success) {
           ebooks.value = data.content.list;
 
-          // 重置分页按钮
+          // reset pager buttons to current page
           pagination.value.current = params.page;
           pagination.value.total = data.content.total;
         } else {
@@ -240,7 +239,7 @@ export default defineComponent({
       });
     };
 
-    const level1 =  ref();
+    const level1 = ref();
     let categorys: any;
     /**
      * 查询所有分类
