@@ -1,26 +1,25 @@
 <template>
   <a-layout>
-    <a-layout-content
-        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
-    >
-      <p>
+    <!--    -->
+    <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+      <div>
         <a-form layout="inline" :model="param">
           <a-form-item>
-            <a-input v-model:value="param.name" placeholder="名称">
+            <a-input v-model:value="param.name" placeholder="Name">
             </a-input>
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
-              查询
+              Find
             </a-button>
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="add()">
-              新增
+              Add
             </a-button>
           </a-form-item>
         </a-form>
-      </p>
+      </div>
       <a-table
           :columns="columns"
           :row-key="record => record.id"
@@ -42,8 +41,9 @@
                 文档管理
               </a-button>
             </router-link>
+            <!-- Change Button -->
             <a-button type="primary" @click="edit(record)">
-              编辑
+              Change
             </a-button>
             <a-popconfirm
                 title="删除后不可恢复，确认删除?"
@@ -52,7 +52,7 @@
                 @confirm="handleDelete(record.id)"
             >
               <a-button type="danger">
-                删除
+                Delete
               </a-button>
             </a-popconfirm>
           </a-space>
@@ -61,8 +61,9 @@
     </a-layout-content>
   </a-layout>
 
+  <!-- popup up -->
   <a-modal
-      title="电子书表单"
+      title="ebook list"
       v-model:visible="modalVisible"
       :confirm-loading="modalLoading"
       @ok="handleModalOk"
@@ -92,7 +93,7 @@
 import {defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
 import {message} from 'ant-design-vue';
-// import {Tool} from "@/util/tool";
+import {Tool} from "@/util/tool";
 
 export default defineComponent({
   name: 'AdminEbook',
@@ -273,7 +274,7 @@ export default defineComponent({
       let result = "";
       categorys.forEach((item: any) => {
         if (item.id === cid) {
-          // return item.name; // 注意，这里直接return不起作用
+          // return item.name;
           result = item.name;
         }
       });
@@ -293,17 +294,14 @@ export default defineComponent({
       handleTableChange,
       handleQuery,
       getCategoryName,
-
       edit,
       add,
-
       ebook,
       modalVisible,
       modalLoading,
       handleModalOk,
       categoryIds,
       level1,
-
       handleDelete
     }
   }
