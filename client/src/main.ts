@@ -31,7 +31,6 @@ axios.interceptors.response.use(function (response) {
 
 //create application component
 const app = createApp(App);
-
 app.use(store).use(router).use(Antd).mount('#app');
 
 //using all ant design icons globally

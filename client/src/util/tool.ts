@@ -18,7 +18,7 @@ export class Tool {
     }
 
     /**
-     * copy object
+     *
      * @param obj
      */
     public static copy(obj: object) {
