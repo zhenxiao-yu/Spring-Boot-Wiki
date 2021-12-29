@@ -46,16 +46,6 @@ public class EbookService {
         LOG.info("Total Row Count: {}", pageInfo.getTotal());
         LOG.info("Total Page Count: {}", pageInfo.getPages());
 
-//        //declare new arraylist variable to hold list of ebook responses
-//        List<EbookQueryRes> responseList = new ArrayList<>();
-//        //iterate through each instance in 'ebooklist' and covert them to 'EbookQueryRes' instances
-//        for (Ebook ebook : ebookList) {
-//            // EbookQueryRes ebookRes = new EbookQueryRes(); //create a new 'ebookRes' instance
-//            //copy properties of each ebook in ebookList to new instances of ebookRes
-//            EbookQueryRes ebookRes = CopyUtil.copy(ebook, EbookQueryRes.class);
-//            responseList.add(ebookRes);
-//        }
-
         List<EbookQueryRes> list = CopyUtil.copyList(ebookList, EbookQueryRes.class);
         PageRes<EbookQueryRes> pageRes = new PageRes();
         pageRes.setTotal(pageInfo.getTotal());
@@ -74,5 +64,10 @@ public class EbookService {
             //if object has id, execute update
             ebookMapper.updateByPrimaryKey(ebook);
         }
+    }
+
+    // delete ebook
+    public void delete(Long id) {
+        ebookMapper.deleteByPrimaryKey(id);
     }
 }

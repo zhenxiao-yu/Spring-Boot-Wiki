@@ -45,12 +45,14 @@
             <a-button type="primary" @click="edit(record)">
               Change
             </a-button>
+            <!-- popup confirm box-->
             <a-popconfirm
-                title="删除后不可恢复，确认删除?"
+                title="Confirm Delete?"
                 ok-text="Yes"
                 cancel-text="No"
                 @confirm="handleDelete(record.id)"
             >
+              <!-- delete button -->
               <a-button type="danger">
                 Delete
               </a-button>
@@ -181,7 +183,7 @@ export default defineComponent({
       });
     };
 
-    // -------- table list ---------
+    // save or insert ebook
     const categoryIds = ref();
     //reference to an instance of ebook
     const ebook = ref();
@@ -200,8 +202,7 @@ export default defineComponent({
         // check if new data has been saved successfully
         if (data.success) {
           modalVisible.value = false;
-
-          // rerender ebook list
+          //rerender ebook list on current page
           handleQuery({
             page: pagination.value.current,
             size: pagination.value.pageSize,
@@ -229,11 +230,14 @@ export default defineComponent({
       ebook.value = {};
     };
 
+    //delete ebook function
     const handleDelete = (id: number) => {
+      //delete ebook by id
       axios.delete("/ebook/delete/" + id).then((response) => {
         const data = response.data; // data = commonResp
+        // check if new data has been deleted successfully
         if (data.success) {
-          // 重新加载列表
+          // rerender ebook list on current page
           handleQuery({
             page: pagination.value.current,
             size: pagination.value.pageSize,
@@ -246,9 +250,8 @@ export default defineComponent({
 
     const level1 = ref();
     let categorys: any;
-    /**
-     * 查询所有分类
-     **/
+
+    //handle query about category list
     const handleQueryCategory = () => {
       loading.value = true;
       axios.get("/category/all").then((response) => {
@@ -259,7 +262,7 @@ export default defineComponent({
           console.log("原始数组：", categorys);
 
           level1.value = [];
-          // level1.value = Tool.array2Tree(categorys, 0);
+          // level1.value = Tool.array2Tree(categories, 0);
           console.log("树形结构：", level1.value);
 
           // 加载完分类后，再加载电子书，否则如果分类树加载很慢，则电子书渲染会报错
@@ -273,6 +276,8 @@ export default defineComponent({
       });
     };
 
+
+    //get the name of a category by it's id
     const getCategoryName = (cid: number) => {
       // console.log(cid)
       let result = "";
@@ -285,6 +290,8 @@ export default defineComponent({
       return result;
     };
 
+
+    //return category when component loads (on mounted)
     onMounted(() => {
       handleQueryCategory();
     });

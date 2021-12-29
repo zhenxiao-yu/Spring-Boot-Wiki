@@ -20,18 +20,26 @@ public class EbookController {
     // get the entire list of ebook
     @GetMapping("/list")
     public CommonRes list(EbookQueryReq req) {
-        CommonRes<PageRes<EbookQueryRes>> resp = new CommonRes<>();
+        CommonRes<PageRes<EbookQueryRes>> res = new CommonRes<>();
         PageRes<EbookQueryRes> list = ebookService.list(req);
-        resp.setContent(list);
-        return resp;
+        res.setContent(list);
+        return res;
     }
 
     // save ebook info
     @PostMapping("/save")
     //  use 'RequestBody to submit as JSON
     public CommonRes save(@RequestBody EbookSaveReq req) {
-        CommonRes resp = new CommonRes<>();
+        CommonRes res = new CommonRes<>();
         ebookService.save(req);
-        return resp;
+        return res;
+    }
+
+    // delete ebook
+    @DeleteMapping("/delete/{id}")
+    public CommonRes delete(@PathVariable Long id) {
+        CommonRes res = new CommonRes<>();
+        ebookService.delete(id);
+        return res;
     }
 }
