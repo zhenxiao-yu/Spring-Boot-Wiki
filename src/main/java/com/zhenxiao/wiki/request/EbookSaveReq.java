@@ -1,6 +1,6 @@
-package com.zhenxiao.wiki.response;
+package com.zhenxiao.wiki.request;
 
-public class EbookRes {
+public class EbookSaveReq {
     private Long id;
 
     private String name;
