@@ -1,25 +1,31 @@
 <template>
   <a-layout>
-    <!--    -->
     <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+
+      <!-- search bar + add function-->
       <div>
         <a-form layout="inline" :model="param">
           <a-form-item>
+            <!-- search bar -->
             <a-input v-model:value="param.name" placeholder="Name">
             </a-input>
           </a-form-item>
           <a-form-item>
+            <!-- find button -->
             <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
               Find
             </a-button>
           </a-form-item>
           <a-form-item>
+            <!-- add button -->
             <a-button type="primary" @click="add()">
               Add
             </a-button>
           </a-form-item>
         </a-form>
       </div>
+
+      <!-- ebook table -->
       <a-table
           :columns="columns"
           :row-key="record => record.id"
@@ -104,7 +110,7 @@ import {Tool} from "@/util/tool";
 export default defineComponent({
   name: 'AdminEbook',
   setup() {
-    const param = ref();
+    const param = ref(); // reference to parameter for searching
     param.value = {};
     const ebooks = ref();
     const pagination = ref({
@@ -158,6 +164,7 @@ export default defineComponent({
         params: {
           page: params.page,
           size: params.size,
+          //if value isn't null, look for ebook by name
           name: param.value.name
         }
       }).then((response) => {
