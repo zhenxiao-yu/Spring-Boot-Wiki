@@ -61,7 +61,7 @@
     </a-layout-content>
   </a-layout>
 
-  <!-- popup up -->
+  <!-- edit ebook popup up window -->
   <a-modal
       title="ebook list"
       v-model:visible="modalVisible"
@@ -69,12 +69,15 @@
       @ok="handleModalOk"
   >
     <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <!--   cover input box   -->
       <a-form-item label="Cover">
         <a-input v-model:value="ebook.cover"/>
       </a-form-item>
+      <!--  ebook title input box    -->
       <a-form-item label="Name">
         <a-input v-model:value="ebook.name"/>
       </a-form-item>
+      <!--   category input box   -->
       <a-form-item label="Category">
         <a-cascader
             v-model:value="categoryIds"
@@ -82,6 +85,7 @@
             :options="level1"
         />
       </a-form-item>
+      <!--   description input box   -->
       <a-form-item label="Description">
         <a-input v-model:value="ebook.description" type="textarea"/>
       </a-form-item>
@@ -108,6 +112,7 @@ export default defineComponent({
     });
     const loading = ref(false);
 
+    //define columns data
     const columns = [
       {
         title: 'Cover',
@@ -123,15 +128,15 @@ export default defineComponent({
         slots: {customRender: 'category'}
       },
       {
-        title: 'DocCount',
+        title: 'Doc Count',
         dataIndex: 'docCount'
       },
       {
-        title: 'ViewCount',
+        title: 'View Count',
         dataIndex: 'viewCount'
       },
       {
-        title: 'VoteCount',
+        title: 'Vote Count',
         dataIndex: 'voteCount'
       },
       {
@@ -168,23 +173,18 @@ export default defineComponent({
       });
     };
 
-    /**
-     * 表格点击页码时触发
-     */
+    //execute when page nav buttons has been clicked
     const handleTableChange = (pagination: any) => {
-      console.log("看看自带的分页参数都有啥：" + pagination);
       handleQuery({
         page: pagination.current,
         size: pagination.pageSize
       });
     };
 
-    // -------- 表单 ---------
-    /**
-     * 数组，[100, 101]对应：前端开发 / Vue
-     */
+    // -------- table list ---------
     const categoryIds = ref();
-    const ebook = ref();
+    const ebook = ref(); //reference to an instance of ebook
+    //popup window states
     const modalVisible = ref(false);
     const modalLoading = ref(false);
     const handleModalOk = () => {
@@ -208,12 +208,11 @@ export default defineComponent({
       });
     };
 
-    /**
-     * 编辑
-     */
+    //edit ebook list function
     const edit = (record: any) => {
       modalVisible.value = true;
-      // ebook.value = Tool.copy(record);
+      //set input box value as new record vale
+      ebook.value = Tool.copy(record);
       categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
     };
 
