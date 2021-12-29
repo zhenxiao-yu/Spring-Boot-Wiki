@@ -38,7 +38,7 @@
           <a-space size="small">
             <router-link :to="'/admin/doc?ebookId=' + record.id">
               <a-button type="primary">
-                文档管理
+                Doc Manager
               </a-button>
             </router-link>
             <!-- Change Button -->
@@ -47,8 +47,8 @@
             </a-button>
             <a-popconfirm
                 title="删除后不可恢复，确认删除?"
-                ok-text="是"
-                cancel-text="否"
+                ok-text="Yes"
+                cancel-text="No"
                 @confirm="handleDelete(record.id)"
             >
               <a-button type="danger">
@@ -183,21 +183,25 @@ export default defineComponent({
 
     // -------- table list ---------
     const categoryIds = ref();
-    const ebook = ref(); //reference to an instance of ebook
+    //reference to an instance of ebook
+    const ebook = ref();
     //popup window states
     const modalVisible = ref(false);
     const modalLoading = ref(false);
+    //execute when 'ok is pressed on popup window
     const handleModalOk = () => {
-      modalLoading.value = true;
-      ebook.value.category1Id = categoryIds.value[0];
-      ebook.value.category2Id = categoryIds.value[1];
+      modalLoading.value = true; //start loading
+      ebook.value.category1Id = categoryIds.value[0]; //save category 1
+      ebook.value.category2Id = categoryIds.value[1]; //save category 2
+      //POST ebook value to backend
       axios.post("/ebook/save", ebook.value).then((response) => {
-        modalLoading.value = false;
+        modalLoading.value = false; // end loading
         const data = response.data; // data = commonResp
+        // check if new data has been saved successfully
         if (data.success) {
           modalVisible.value = false;
 
-          // 重新加载列表
+          // rerender ebook list
           handleQuery({
             page: pagination.value.current,
             size: pagination.value.pageSize,
@@ -208,19 +212,20 @@ export default defineComponent({
       });
     };
 
-    //edit ebook list function
+    //edit ebook function
     const edit = (record: any) => {
+      //show edit window
       modalVisible.value = true;
       //set input box value as new record vale
       ebook.value = Tool.copy(record);
       categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
     };
 
-    /**
-     * 新增
-     */
+    //add ebook function
     const add = () => {
+      //show add window
       modalVisible.value = true;
+      //clear input value when adding
       ebook.value = {};
     };
 
@@ -293,8 +298,8 @@ export default defineComponent({
       handleTableChange,
       handleQuery,
       getCategoryName,
-      edit,
-      add,
+      edit,//edit ebook
+      add, //add new ebook
       ebook,
       modalVisible,
       modalLoading,
