@@ -5,8 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.zhenxiao.wiki.entity.Ebook;
 import com.zhenxiao.wiki.entity.EbookExample;
 import com.zhenxiao.wiki.mapper.EbookMapper;
-import com.zhenxiao.wiki.request.EbookReq;
-import com.zhenxiao.wiki.response.EbookRes;
+import com.zhenxiao.wiki.request.EbookQueryReq;
+import com.zhenxiao.wiki.request.EbookSaveReq;
+import com.zhenxiao.wiki.response.EbookQueryRes;
 import com.zhenxiao.wiki.response.PageRes;
 import com.zhenxiao.wiki.util.CopyUtil;
 import org.slf4j.Logger;
@@ -25,7 +26,8 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public PageRes<EbookRes> list(EbookReq req) {
+    // return complete list of ebooks
+    public PageRes<EbookQueryRes> list(EbookQueryReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         //dynamic sql syntax
@@ -41,20 +43,31 @@ public class EbookService {
         LOG.info("Total Page Count: {}", pageInfo.getPages());
 
 //        //declare new arraylist variable to hold list of ebook responses
-//        List<EbookRes> responseList = new ArrayList<>();
-//        //iterate through each instance in 'ebooklist' and covert them to 'EbookRes' instances
+//        List<EbookQueryRes> responseList = new ArrayList<>();
+//        //iterate through each instance in 'ebooklist' and covert them to 'EbookQueryRes' instances
 //        for (Ebook ebook : ebookList) {
-//            // EbookRes ebookRes = new EbookRes(); //create a new 'ebookRes' instance
+//            // EbookQueryRes ebookRes = new EbookQueryRes(); //create a new 'ebookRes' instance
 //            //copy properties of each ebook in ebookList to new instances of ebookRes
-//            EbookRes ebookRes = CopyUtil.copy(ebook, EbookRes.class);
+//            EbookQueryRes ebookRes = CopyUtil.copy(ebook, EbookQueryRes.class);
 //            responseList.add(ebookRes);
 //        }
 
-        List<EbookRes> list = CopyUtil.copyList(ebookList, EbookRes.class);
-
-        PageRes<EbookRes> pageRes = new PageRes();
+        List<EbookQueryRes> list = CopyUtil.copyList(ebookList, EbookQueryRes.class);
+        PageRes<EbookQueryRes> pageRes = new PageRes();
         pageRes.setTotal(pageInfo.getTotal());
         pageRes.setList(list);
         return pageRes;
+    }
+
+    // save ebook info
+    public void save(EbookSaveReq req) {
+        Ebook ebook = CopyUtil.copy(req, Ebook.class);
+        if (ObjectUtils.isEmpty(req.getId())){
+            //if object has no id, execute add
+            ebookMapper.insert(ebook);
+        } else {
+            //if object has id, execute update
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
     }
 }
