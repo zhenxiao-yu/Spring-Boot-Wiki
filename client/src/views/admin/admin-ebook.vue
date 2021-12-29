@@ -224,7 +224,7 @@ export default defineComponent({
     const edit = (record: any) => {
       //show edit window
       modalVisible.value = true;
-      //set input box value as new record vale
+      //copy record so that unsaved values won't be be displayed on the ebook list
       ebook.value = Tool.copy(record);
       categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
     };
