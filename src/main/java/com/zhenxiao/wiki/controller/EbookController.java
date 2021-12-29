@@ -30,7 +30,7 @@ public class EbookController {
     // save ebook info
     @PostMapping("/save")
     //  use 'RequestBody to submit as JSON
-    public CommonRes save(@RequestBody EbookSaveReq req) {
+    public CommonRes save(@Valid @RequestBody EbookSaveReq req) {
         CommonRes res = new CommonRes<>();
         ebookService.save(req);
         return res;
