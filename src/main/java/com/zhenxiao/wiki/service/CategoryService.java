@@ -31,8 +31,19 @@ public class CategoryService {
     private SnowFlake snowFlake;
 
     // return complete list of categories
+    public List<CategoryQueryRes> all() {
+        CategoryExample categoryExample = new CategoryExample();
+        // sort category by ascending order
+        categoryExample.setOrderByClause("sort asc");
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        //list copy
+        return CopyUtil.copyList(categoryList, CategoryQueryRes.class);
+    }
+
+    // return category query results in pages
     public PageRes<CategoryQueryRes> list(CategoryQueryReq req) {
         CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
         CategoryExample.Criteria criteria = categoryExample.createCriteria();
         //using page helper plugin
         PageHelper.startPage(req.getPage(),req.getSize());
@@ -41,7 +52,7 @@ public class CategoryService {
         PageInfo<Category> pageInfo = new PageInfo<>(categoryList);
         LOG.info("Total Row Count: {}", pageInfo.getTotal());
         LOG.info("Total Page Count: {}", pageInfo.getPages());
-
+        //list copy
         List<CategoryQueryRes> list = CopyUtil.copyList(categoryList, CategoryQueryRes.class);
         PageRes<CategoryQueryRes> pageRes = new PageRes();
         pageRes.setTotal(pageInfo.getTotal());
