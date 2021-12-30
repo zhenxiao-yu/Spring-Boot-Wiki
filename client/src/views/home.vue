@@ -46,7 +46,6 @@
               </span>
               <span>
                 <component v-bind:is="'UserOutlined'" style="margin-right: 8px"/>
-
                 {{ item.viewCount }}
               </span>
               <span>
@@ -143,7 +142,6 @@ export default defineComponent({
         isShowWelcome.value = false;
         handleQueryEbook();
       }
-      // isShowWelcome.value = value.key === 'welcome';
     };
 
 

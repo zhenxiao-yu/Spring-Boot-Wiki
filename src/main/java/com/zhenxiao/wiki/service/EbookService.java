@@ -34,9 +34,13 @@ public class EbookService {
     public PageRes<EbookQueryRes> list(EbookQueryReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        //dynamic sql syntax
+        //dynamic sql syntax for looking up ebooks by name
         if (!ObjectUtils.isEmpty(req.getName())) {
             criteria.andNameLike("%" + req.getName() + "%");
+        }
+        //dynamic sql syntax for looking up ebooks in a subcategory
+        if (!ObjectUtils.isEmpty(req.getCategoryId2())) {
+            criteria.andCategory2IdEqualTo(req.getCategoryId2() );
         }
         //using page helper plugin
         PageHelper.startPage(req.getPage(),req.getSize());
