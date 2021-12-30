@@ -3,7 +3,7 @@
     <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
 
       <!-- search bar + add function-->
-      <div>
+      <p>
         <a-form layout="inline" :model="param">
           <a-form-item>
             <!-- search bar -->
@@ -23,7 +23,7 @@
             </a-button>
           </a-form-item>
         </a-form>
-      </div>
+      </p>
 
       <!-- ebook table -->
       <a-table
@@ -158,7 +158,7 @@ export default defineComponent({
     const handleQuery = (params: any) => {
       //set loading to true initially
       loading.value = true;
-      // 如果不清空现有数据，则编辑保存重新加载数据后，再点编辑，则列表显示的还是编辑前的数据
+      //must clear current value, do that old data is not rendered to editor window after it's been changed
       ebooks.value = [];
       axios.get("/ebook/list", {
         params: {
@@ -190,7 +190,7 @@ export default defineComponent({
       });
     };
 
-    // save or insert ebook
+
     const categoryIds = ref();
     //reference to an instance of ebook
     const ebook = ref();
@@ -269,10 +269,8 @@ export default defineComponent({
           console.log("Original：", categorys);
 
           level1.value = [];
-          // level1.value = Tool.array2Tree(categories, 0);
+          level1.value = Tool.array2Tree(categorys, 0);
           console.log("Tree：", level1.value);
-
-          // 加载完分类后，再加载电子书，否则如果分类树加载很慢，则电子书渲染会报错
           handleQuery({
             page: 1,
             size: pagination.value.pageSize,
@@ -290,7 +288,6 @@ export default defineComponent({
       let result = "";
       categorys.forEach((item: any) => {
         if (item.id === cid) {
-          // return item.name;
           result = item.name;
         }
       });
