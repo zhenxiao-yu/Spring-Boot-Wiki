@@ -14,9 +14,9 @@
           <span>Welcome</span>
         </a-menu-item>
         <!-- show parent categories -->
-        <a-sub-menu v-for="item in level1" :key="item.id" :disabled="true">
+        <a-sub-menu v-for="item in level1" :key="item.id" :disabled="false">
           <template v-slot:title>
-            <span><user-outlined/>{{ item.name }}</span>
+            <span> <user-outlined/> {{ item.name }}</span>
           </template>
           <a-menu-item v-for="child in item.children" :key="child.id">
             <MailOutlined/>
@@ -89,11 +89,8 @@ export default defineComponent({
     const ebooks = ref();
     //using reactive
     // const ebooks1 = reactive({books: []});
-
     const openKeys = ref();
-
     const level1 = ref();
-
     let categorys: any;
 
     // return list of all categories
@@ -118,6 +115,7 @@ export default defineComponent({
       });
     };
 
+    //whether or not to show welcome message
     const isShowWelcome = ref(true);
     let categoryId2 = 0;
 
@@ -135,8 +133,9 @@ export default defineComponent({
       });
     };
 
+    //Show welcome page or corresponding ebooks when side menu is clicked
     const handleClick = (value: any) => {
-      // console.log("menu click", value)
+      //show welcome when welcome menu item is clicked
       if (value.key === 'welcome') {
         isShowWelcome.value = true;
       } else {
@@ -147,6 +146,8 @@ export default defineComponent({
       // isShowWelcome.value = value.key === 'welcome';
     };
 
+
+    //load categories upon mounting
     onMounted(() => {
       handleQueryCategory();
     });
@@ -173,11 +174,11 @@ export default defineComponent({
 
 <!--style for current component-->
 <style scoped>
-  .ant-avatar {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 8%;
-    margin: 5px 0;
-  }
+.ant-avatar {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 8%;
+  margin: 5px 0;
+}
 </style>
