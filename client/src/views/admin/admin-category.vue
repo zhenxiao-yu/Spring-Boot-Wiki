@@ -85,7 +85,7 @@
           ref="select"
         >
           <a-select-option :value="0">
-            无
+            Empty
           </a-select-option>
           <a-select-option v-for="c in level1" :key="c.id" :value="c.id" :disabled="category.id === c.id">
             {{c.name}}
@@ -118,11 +118,6 @@
           title: 'Name',
           dataIndex: 'name'
         },
-        // {
-        //   title: 'Parent',
-        //   key: 'parent',
-        //   dataIndex: 'parent'
-        // },
         {
           title: 'Order',
           dataIndex: 'sort'
@@ -134,25 +129,14 @@
         }
       ];
 
-      /**
-       * 一级分类树，children属性就是二级分类
-       * [{
-       *   id: "",
-       *   name: "",
-       *   children: [{
-       *     id: "",
-       *     name: "",
-       *   }]
-       * }]
-       */
-      const level1 = ref(); // 一级分类树，children属性就是二级分类
+      // level1 category，children property means that category is level 2
+      const level1 = ref();
       level1.value = [];
 
       //handle query about category list
       const handleQuery = () => {
         //set loading to true initially
         loading.value = true;
-        // 如果不清空现有数据，则编辑保存重新加载数据后，再点编辑，则列表显示的还是编辑前的数据
         level1.value = [];
         axios.get("/category/all").then((response) => {
           loading.value = false;
@@ -160,7 +144,6 @@
           if (data.success) {
             categorys.value = data.content;
             console.log("Original：", categorys.value);
-
             level1.value = [];
             level1.value = Tool.array2Tree(categorys.value, 0);
             console.log("Tree：", level1);

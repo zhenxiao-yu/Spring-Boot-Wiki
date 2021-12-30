@@ -23,6 +23,7 @@ export class Tool {
      */
     public static copy(obj: object) {
         if (Tool.isNotEmpty(obj)) {
+            //parse after stringify to copy object
             return JSON.parse(JSON.stringify(obj));
         }
     }
@@ -35,14 +36,12 @@ export class Tool {
         if (Tool.isEmpty(array)) {
             return [];
         }
-
         const result = [];
         for (let i = 0; i < array.length; i++) {
             const c = array[i];
             // console.log(Number(c.parent), Number(parentId));
             if (Number(c.parent) === Number(parentId)) {
                 result.push(c);
-
                 // check current node's child node recursively
                 const children = Tool.array2Tree(array, c.id);
                 if (Tool.isNotEmpty(children)) {
